@@ -13,27 +13,309 @@
 <body class="bg-dark">
 	<div class="container full-height">
 		<div class="row full-height">
-			<div class="col-3">
-				<div class="card my-3">
+			<div class="col-3 py-3">
+				<div class="card full-height">
+					<div class="card-header">
+						<h3 class="d-inline-block">Skins</h3>
+						<button id="options-btn" type="button" class="btn btn-primary half-width float-end">
+							<span>Options</span>
+							<span id="options-btn-arrow" class="float-end">[>]</span>
+						</button>
+					</div>
 					<div class="card-body">
-						<button id="options-btn" type="button" class="btn btn-primary">Options [>]</button>
+						<div id="skin-list" class="d-flex flex-wrap">
+							<button id="skin-1" type="button" class="btn btn-outline-primary width-25 m-1 p-1">
+								<img src="element_g.png">
+							</button>
+							<button id="skin-2" type="button" class="btn btn-outline-primary width-25 m-1 p-1">
+								<img src="element_f.png">
+							</button>
+							<button id="skin-3" type="button" class="btn btn-outline-primary width-25 m-1 p-1">
+								<img src="element_b.png">
+							</button>
+							<button id="skin-4" type="button" class="btn btn-outline-primary width-25 m-1 p-1">
+								<img src="element_p.png">
+							</button>
+							<button id="skin-5" type="button" class="btn btn-outline-primary width-25 m-1 p-1">
+								<img src="element_c.png">
+							</button>
+							<button id="skin-6" type="button" class="btn btn-outline-primary width-25 m-1 p-1">
+								<img src="element_m.png">
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col py-3 max-full-height">
+				<div id="skin-info" class="card full-height">
+					<div class="card-header">
+						<h3 class="card-title">Selected skin</h3>
+					</div>
+					<div id="skin-info-body" class="card-body overflow-auto">
+						<h5 class="card-title text-center">Linguine With Sunglasses</h5>
+						<h5 class="card-subtitle text-center">Uncommon</h5>
+						<div class="d-inline-block position-relative start-50 translate-middle-x">
+							<img src="element_g.png"><h5 class="card-subtitle d-inline-block ms-2">Apex Gorblegorble</h5>
+						</div>
 						<br>
-						<p>List skins</p>
+						<br>
+						<div class="d-inline-block width-10 p-1 border rounded stat-hp">
+							<p class="fs-6 text-center my-0">HP</p>
+							<p class="text-light text-center my-0">183</p>
+						</div>
+						<div class="d-inline-block width-10 p-1 border rounded stat-atk">
+							<p class="fs-6 text-center my-0">ATK</p>
+							<p class="text-light text-center my-0">19</p>
+						</div>
+						<div class="d-inline-block width-10 p-1 border rounded stat-def">
+							<p class="fs-6 text-center my-0">DEF</p>
+							<p class="text-light text-center my-0">19</p>
+						</div>
+						<div class="d-inline-block width-10 p-1 border rounded stat-spd">
+							<p class="fs-6 text-center my-0">SPD</p>
+							<p class="text-light text-center my-0">329</p>
+						</div>
+						<br>
+						<p>Targets: Fastest Enemy</p>
+						<hr>
+						<p class="mb-1 fs-5">ABILITIES</p>
+						<div class="border border-dark rounded mb-1">
+							<p class="mx-1 my-1">[Combo Draw Ability]</p>
+							<p class="mx-1 my-1">Anytime you draw a supporter, if it has <glasses> in their name, this Linguine gains +15 attack.</p>
+						</div>
+						<div class="border border-dark rounded mb-1">
+							<p class="mx-1 my-1">[Kill Ability]</p>
+							<p class="mx-1 my-1">When this Linguine kills an enemy leader, draw 1 supporter and add 5 defense to this Linguine.</p>
+						</div>
+						<p class="mb-1 fs-5">SUPPORTER ABILITY</p>
+						<div class="border border-dark rounded mb-1">
+							<p class="mx-1 my-1">[Passive]</p>
+							<p class="mx-1 my-1">The attack of your Lowest-Attack Leader is increased by 3.</p>
+						</div>
+						<hr>
+						<p>Crate sources</p>
+					</div>
+					<div class="card-footer">
+						<button id="save-skin" class="btn btn-success full-width">
+							<p class="text-center my-2">Save skin</p>
+						</button>
+					</div>
+				</div>
+				<div id="options" class="card full-height d-none">
+					<div class="card-header">
+						<h3 class="card-title">Options</h3>
+					</div>
+					<div id="options-body" class="card-body overflow-auto">
+
+						<h3 class="card-title">Search filters</h3>
+
+						<span class="card-subtitle mb-0"><b>Sort by</b></span>
+						<select id="search_sort">
+							<option selected value="ID">ID</option>
+							<option value="Name">Name</option>
+							<option value="Health">Health</option>
+							<option value="Attack">Attack</option>
+							<option value="Defense">Defense</option>
+							<option value="Speed">Speed</option>
+							<option value="Rarity">Rarity</option>
+						</select>
+						<label class="px-1 py-1" for="search_sort_reverse">
+							<input type="checkbox" id="search_sort_reverse">
+							Reverse
+						</label><br>
+
+						<input class="my-1" type="text" id="search_any" placeholder="Any field">
+						<label class="px-1 py-1" for="search_any_fuzzy">
+							<input type="checkbox" id="search_any_fuzzy">
+							Fuzzy search
+						</label><br>
+
+						<input class="my-1" type="text" id="search_name" placeholder="Name"><br>
+
+						<input class="my-1" type="text" id="search_description" placeholder="Skin description"><br>
+
+						<input class="my-1" type="text" id="search_abilities" placeholder="Abilities">
+						<label class="px-1 py-1" for="search_abilities_fuzzy">
+							<input type="checkbox" id="search_abilities_fuzzy">
+							Fuzzy search
+						</label><br>
+
+						<br>
+						<p class="card-subtitle mb-0"><b>From crates</b></p>
+						<div>
+							<label class="px-1 py-1" for="search_crate_normal">
+								<input type="checkbox" id="search_crate_normal">
+								Normal
+							</label>
+							<label class="px-1 py-1" for="search_crate_daily">
+								<input type="checkbox" id="search_crate_daily">
+								Daily
+							</label>
+							<label class="px-1 py-1" for="search_crate_gold">
+								<input type="checkbox" id="search_crate_gold">
+								Gold
+							</label>
+						</div>
+						<div>
+							<label class="px-1 py-1" for="search_crate_spring">
+								<input type="checkbox" id="search_crate_spring">
+								Spring
+							</label>
+							<label class="px-1 py-1" for="search_crate_summer">
+								<input type="checkbox" id="search_crate_summer">
+								Summer
+							</label>
+							<label class="px-1 py-1" for="search_crate_fall">
+								<input type="checkbox" id="search_crate_fall">
+								Fall
+							</label>
+							<label class="px-1 py-1" for="search_crate_winter">
+								<input type="checkbox" id="search_crate_winter">
+								Winter
+							</label>
+						</div>
+
+						<br>
+						<p class="card-subtitle mb-0"><b>Rarity</b></p>
+						<div>
+							<label class="px-1 py-1" for="search_rarity_c">
+								<input type="checkbox" id="search_rarity_c">
+								Common
+							</label>
+							<label class="px-1 py-1" for="search_rarity_uc">
+								<input type="checkbox" id="search_rarity_uc">
+								Uncommon
+							</label>
+							<label class="px-1 py-1" for="search_rarity_r">
+								<input type="checkbox" id="search_rarity_r">
+								Rare
+							</label>
+							<label class="px-1 py-1" for="search_rarity_ur">
+								<input type="checkbox" id="search_rarity_ur">
+								Ultra-Rare
+							</label>
+							<label class="px-1 py-1" for="search_rarity_l">
+								<input type="checkbox" id="search_rarity_l">
+								Legendary
+							</label>
+						</div>
+
+						<br>
+						<p class="card-subtitle mb-0"><b>Element</b></p>
+						<div>
+							<label class="px-1 py-1" for="search_element_apex">
+								<input type="checkbox" id="search_element_apex">
+								Apex only
+							</label>
+						</div>
+						<div>
+							<label class="px-1 py-1" for="search_element_g">
+								<input type="checkbox" id="search_element_g">
+								<img src="element_g.png">
+							</label>
+							<label class="px-1 py-1" for="search_element_f">
+								<input type="checkbox" id="search_element_f">
+								<img src="element_f.png">
+							</label>
+							<label class="px-1 py-1" for="search_element_b">
+								<input type="checkbox" id="search_element_b">
+								<img src="element_b.png">
+							</label>
+							<label class="px-1 py-1" for="search_element_p">
+								<input type="checkbox" id="search_element_p">
+								<img src="element_p.png">
+							</label>
+							<label class="px-1 py-1" for="search_element_c">
+								<input type="checkbox" id="search_element_c">
+								<img src="element_c.png">
+							</label>
+							<label class="px-1 py-1" for="search_element_m">
+								<input type="checkbox" id="search_element_m">
+								<img src="element_m.png">
+							</label>
+						</div>
+
+						<br>
+						<p class="card-subtitle mb-0"><b>Attack target</b></p>
+						<div>
+							<label class="px-1 py-1" for="search_target_high_hp">
+								<input type="checkbox" id="search_target_high_hp">
+								High HP
+							</label>
+							<label class="px-1 py-1" for="search_target_high_atk">
+								<input type="checkbox" id="search_target_high_atk">
+								High ATK
+							</label>
+							<label class="px-1 py-1" for="search_target_high_def">
+								<input type="checkbox" id="search_target_high_def">
+								High DEF
+							</label>
+							<label class="px-1 py-1" for="search_target_high_spd">
+								<input type="checkbox" id="search_target_high_spd">
+								High SPD
+							</label>
+							<label class="px-1 py-1" for="search_target_high_random">
+								<input type="checkbox" id="search_target_high_random">
+								Random
+							</label>
+						</div>
+						<div>
+							<label class="px-1 py-1" for="search_target_low_hp">
+								<input type="checkbox" id="search_target_low_hp">
+								Low HP
+							</label>
+							<label class="px-1 py-1" for="search_target_low_atk">
+								<input type="checkbox" id="search_target_low_atk">
+								Low ATK
+							</label>
+							<label class="px-1 py-1" for="search_target_low_def">
+								<input type="checkbox" id="search_target_low_def">
+								Low DEF
+							</label>
+							<label class="px-1 py-1" for="search_target_low_spd">
+								<input type="checkbox" id="search_target_low_spd">
+								Low SPD
+							</label>
+						</div>
+
+						<br>
+						<p class="card-subtitle mb-0"><b>Stats</b></p>
+						<div>
+							<span class="allow-tabs">Health&#9;</span>
+							<input class="my-1" type="number" id="search_hp_low" placeholder="0" min="0" max="999">
+							<span>to</span>
+							<input class="my-1" type="number" id="search_hp_high" placeholder="999" min="0" max="999">
+
+							<br>
+							<span class="allow-tabs">Attack&#9;</span>
+							<input class="my-1" type="number" id="search_atk_low" placeholder="0" min="0" max="999">
+							<span>to</span>
+							<input class="my-1" type="number" id="search_atk_high" placeholder="999" min="0" max="999">
+
+							<br>
+							<span class="allow-tabs">Defense&#9;</span>
+							<input class="my-1" type="number" id="search_def_low" placeholder="0" min="0" max="999">
+							<span>to</span>
+							<input class="my-1" type="number" id="search_def_high" placeholder="999" min="0" max="999">
+
+							<br>
+							<span class="allow-tabs">Speed&#9;</span>
+							<input class="my-1" type="number" id="search_spd_low" placeholder="0" min="0" max="999">
+							<span>to</span>
+							<input class="my-1" type="number" id="search_spd_high" placeholder="999" min="0" max="999">
+						</div>
+
+						<h3 class="card-title d-none">Card info</h3>
 					</div>
 				</div>
 			</div>
-			<div class="col">
-				<div class="card my-3">
-					<div id="skin_info" class="card-body">
+			<div class="col-3 py-3">
+				<div class="card full-height">
+					<div class="card-header">
+						<h3 class="card-title">Saved</h3>
 					</div>
-					<div id="options" class="card-body">
-					</div>
-				</div>
-			</div>
-			<div class="col-3">
-				<div class="card my-3">
 					<div class="card-body">
-						<p>Saved</p>
+						<p>List of saved skins</p>
 					</div>
 				</div>
 			</div>

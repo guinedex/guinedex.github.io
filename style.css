@@ -1,4 +1,58 @@
-html, body,
+html, body {
+	height: 100%;
+}
 .full-height {
 	height: 100%;
+}
+
+.max-full-height {
+	max-height: 100%;
+}
+
+.width-10 {
+	width: 10%;
+}
+
+.width-25 {
+	width: 25%;
+}
+
+.half-width {
+	width: 50%;
+}
+
+.full-width {
+	width: 100%;
+}
+
+.push-down {
+	transform: translateY(50%);
+}
+
+.allow-tabs {
+	white-space: pre;
+}
+
+.stat-hp {
+	border-color: #FF7581 !important;
+	background-color: #732E34;
+	color: #FF7581;
+}
+
+.stat-atk {
+	border-color: #FFAF47 !important;
+	background-color: #734B17;
+	color: #FFAF47;
+}
+
+.stat-def {
+	border-color: #81C6FF !important;
+	background-color: #345673;
+	color: #81C6FF;
+}
+
+.stat-spd {
+	border-color: #FFED5E !important;
+	background-color: #736A22;
+	color: #FFED5E;
 }
