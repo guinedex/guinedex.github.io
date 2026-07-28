@@ -1,6 +1,7 @@
 //let skins = [];
 let skins = [];
 let saved = [];
+let savedCookieKey = "saved";
 let searchOptions = {
 	sortBy: "ID",
 	sortByReverse: false,
@@ -100,7 +101,6 @@ let updatePreview;
 function buildSkinCard(skin_id) {
 	let $skinCard = buildBaseCard(skin_id, "skin");
 	$skinCard.on("click", clickEvent => {
-		console.log(`click skin ${skin_id}`);
 		updatePreview(skin_id);
 		updateSaveButton(skin_id);
 	});
@@ -111,7 +111,6 @@ function buildSkinCard(skin_id) {
 function buildSavedCard(skin_id) {
 	let $skinCard = buildBaseCard(skin_id, "saved");
 	$skinCard.on("click", clickEvent => {
-		console.log(`click saved ${skin_id}`);
 		updatePreview(skin_id);
 		updateSaveButton(skin_id);
 	});
@@ -122,11 +121,13 @@ handleSave = (skin_id) => {
 	let should_save = !saved.includes(skin_id);
 	if (should_save) {
 		saved.push(skin_id);
+		Cookies.set(savedCookieKey, saved);
 		buildSavedCard(skin_id).appendTo($("#saved-list"));
 	} else {
 		let saved_index = saved.indexOf(skin_id);
 		if (saved_index > -1)
 			saved.splice(saved_index, 1);
+		Cookies.set(savedCookieKey, saved);
 		$(`#saved-${skin_id}`).remove();
 	}
 	updateSaveButton(skin_id);
@@ -382,7 +383,6 @@ function filterSearchResults() {
 		let sortFallbackDesc = fallbackKey in sortDirectionMap ? sortDirectionMap[fallbackKey] == "desc" : true;
 		// Combine values (xor) which effectively reverse the list
 		let doReverseMain = searchOptions.sortByReverse != sortMainDesc;
-		console.log(doReverseMain);
 		let doReverseFallback = searchOptions.sortByReverse != sortFallbackDesc;
 		// Special sort cases, e.g. rarity (L > UR > C)
 		if (sortKey == "rarity") {
@@ -538,14 +538,19 @@ function applySearchOptions() {
 }
 
 function skinsLoaded() {
+	$("#skin-list").children().remove();
 	for (let skin of skins) {
 		buildSkinCard(skin.id).appendTo($("#skin-list"));
 	}
 }
 
-$(window).on("load", () => {
-    console.log("Page loaded");
+function savedLoaded() {
+	for (let saved_id of saved) {
+		buildSavedCard(saved_id).appendTo($("#saved-list"));
+	}
+}
 
+addEventListener("load", () => {
 	// Fetch skin data from JSON file
 	$.getJSON("dex.json", (data) => {
 		skins = data;
@@ -553,13 +558,14 @@ $(window).on("load", () => {
 
 		skinsLoaded();
 		applySearchOptions();
-	}).fail(() => {
-		$("#skin-list").append($(`
-			<p>Error loading skins from JSON!</p>
-			<p>Please ensure script, fetch, and script from <code>jsdelivr.net</code> are enabled</p>
-		`));
-		skinsLoaded();
-		applySearchOptions();
+
+		// Only load cookie'd saved skins after skin data has been loaded
+		let cookieSaved = Cookies.get(savedCookieKey);
+		if (typeof cookieSaved == "string") {
+			let listifiedSaved = cookieSaved.split(",").map((s) => parseInt(s)).filter((i) => i > 0);
+			saved = listifiedSaved;
+		}
+		savedLoaded();
 	});
 
 	// Options button handler
