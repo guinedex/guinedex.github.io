@@ -371,25 +371,51 @@ function formatAttackTarget(attackTarget) {
 function filterSearchResults() {
 	// Sort
 	let sortKey = searchOptions.sortBy.toLowerCase(); // works without a lookup dict so far
-	// Default sorting algo, replaced for special cases like rarity, which shouldn't be sorted like strings
-	let sortAlgo = (a, b) => {
-		return (a[sortKey] > b[sortKey]) ? 1 : ((a[sortKey] < b[sortKey]) ? -1 : ((a.name < b.name) ? -1 : 1));
-	};
-	// Rarity sorting
-	if (sortKey == "rarity") {
-		console.log("rarity")
-		let rarityKey = {"L": 0, "UR": 1, "R": 2, "UC": 3, "C": 4};
-		sortAlgo = (a, b) => {
-			let aVal = rarityKey[a[sortKey]];
-			let bVal = rarityKey[b[sortKey]];
-			return (aVal > bVal ? 1 : (aVal < bVal ? -1 : (a.name < b.name ? -1 : 1)));
-		};
+	// Build sorting algo
+	let sortAlgo;
+	{
+		// Name and ID should sort by ascending by default, others sort descending
+		let sortDirectionMap = {"name": "asc", "id": "asc"};
+		let sortMainDesc = sortKey in sortDirectionMap ? sortDirectionMap[sortKey] == "desc" : true;
+		// Fallback sorting value - alphabetical order
+		let fallbackKey = "name";
+		let sortFallbackDesc = fallbackKey in sortDirectionMap ? sortDirectionMap[fallbackKey] == "desc" : true;
+		// Combine values (xor) which effectively reverse the list
+		let doReverseMain = searchOptions.sortByReverse != sortMainDesc;
+		console.log(doReverseMain);
+		let doReverseFallback = searchOptions.sortByReverse != sortFallbackDesc;
+		// Special sort cases, e.g. rarity (L > UR > C)
+		if (sortKey == "rarity") {
+			// Rarity sorting
+			let greaterOrder = doReverseMain ? -1 : 1;
+			let lesserOrder = 0 - greaterOrder;
+			let fallbackLesserOrder = doReverseFallback ? 1 : -1;
+			let fallbackGreaterOrder = 0 - fallbackLesserOrder;
+			let rarityMap = {"C": 0, "UC": 1, "R": 2, "UR": 3, "L": 4};
+			sortAlgo = (a, b) => {
+				let aVal = rarityMap[a[sortKey]];
+				let bVal = rarityMap[b[sortKey]];
+				return (aVal > bVal ? greaterOrder : (aVal < bVal ? lesserOrder : (a.name < b.name ? fallbackLesserOrder : fallbackGreaterOrder)));
+			};
+		} else {
+			// Default sort case
+
+			// Standard ordering reversed if reverse is checked or if it has a different default sort direction
+			let greaterOrder = doReverseMain ? -1 : 1;
+			let lesserOrder = 0 - greaterOrder;
+			// Fallback ordering, reversed if reverse is checked or if fallback order is different
+			let fallbackLesserOrder = doReverseFallback ? 1 : -1;
+			let fallbackGreaterOrder = 0 - fallbackLesserOrder;
+
+			sortAlgo = (a, b) => {
+				let aVal = a[sortKey];
+				let bVal = b[sortKey];
+				return aVal > bVal ? greaterOrder : (aVal < bVal ? lesserOrder : (a.name < b.name ? fallbackLesserOrder : fallbackGreaterOrder));
+			};
+		}
 	}
 	let sortedIDs = skins.toSorted(sortAlgo);
 	sortedIDs = sortedIDs.map((skin) => skin.id);
-	// universal reverse
-	if (searchOptions.sortByReverse)
-		sortedIDs.reverse();
 	// detach and reattach via appending, to reorder them
 	for (let sortedID of sortedIDs) {
 		$(`#skin-${sortedID}`).detach().appendTo($("#skin-list"));
