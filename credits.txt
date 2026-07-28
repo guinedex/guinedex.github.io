@@ -1,0 +1,98 @@
+This project includes third-party assets licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) license unless otherwise noted.
+You are free to use, share, and adapt these works with proper attribution. No warranties are provided by the original creators.
+Full license: https://creativecommons.org/licenses/by/4.0/
+
+Super Linguine Cat Simulator Deluxe Online (SLCSDO) is by Brody Seyranian, please support the developer and game at
+https://store.steampowered.com/app/4368350/Silly_Linguine_Cat_Simulator_Deluxe_Online/
+
+Skin Assets
+
+"Headphones" - ~Drift~ (QuickDriftVR)
+https://sketchfab.com/3d-models/headphones-2f54d1c5d3c943bfadc72ab656587c90
+
+"Sunglasses" - Next Retail
+https://sketchfab.com/3d-models/sunglasses-ef644e3ba9414b7997570a92857bee24
+
+"Fedora Hat" - Akimremi
+https://sketchfab.com/3d-models/fedora-hat-8231b693eb36407b8bd2bffb3a903cdb
+
+"Tophat" - Skuso
+https://sketchfab.com/3d-models/tophat-f4ab0103956b4e9787ebaece0fe574b5
+
+"Ushanka - Trapper Hat" - Karolina Renkiewicz
+https://sketchfab.com/3d-models/ushanka-trapper-hat-8ec1e82d4b75439bb596019a3bde6a89
+
+"Cowboy Hat" - MadeByYeshe
+https://sketchfab.com/3d-models/cowboy-hat-15fd37f4e03c447b995b5851cac52801
+
+"1870s Style Top Hat" - MadeByYeshe
+https://sketchfab.com/3d-models/1870s-style-top-hat-69cee95b535545b2a0e69476a54c9dae
+
+"Bucket Hat" - oluwaphemi
+https://sketchfab.com/3d-models/bucket-hat-5206aa93bce448a8b936ce763cfc245d
+
+"Beanie" - oluwaphemi
+https://sketchfab.com/3d-models/beanie-ff6dc83c818c4e2aa722cb89e6ada577
+
+"Blue Eye Iris" - Adam Worthington
+https://sketchfab.com/3d-models/blue-eye-iris-f5e24a9e32a64582aa9c6ed898604e5e
+
+"Glasses" - Culerdamage
+https://sketchfab.com/3d-models/glasses-a00f60192d1740f49902009c3d0aac05
+
+"Sci-Fi Crate / Ammunition Box" - ul1tka
+https://sketchfab.com/3d-models/sci-fi-crate-ammunition-box-1-69fe3211493c4a4db26ad0c4e2e49a83
+
+"Steampunk Hat" - Lana
+https://sketchfab.com/3d-models/steampunk-hat-b4ed18118f2249b2bb28af78b7fb7a1d
+
+"Steampunk Hat" - count_zero
+https://sketchfab.com/3d-models/steampunk-hat-37b80fd0c84e43c480dedb2aefebf88f
+
+"Weathered Pith Hat" - Brianna Fromont
+https://sketchfab.com/3d-models/weathered-pith-hat-36791fc610aa484a8ada2a952ada9b75
+
+"Hard Hat" - Kristiyan Marinov
+https://sketchfab.com/3d-models/hard-hat-5a67c92ce3174c37946076512356b0c7
+
+"Baseball Cap 01 Package" - dennismfrancisart
+https://sketchfab.com/3d-models/baseball-cap-01-package-823e79f5e5ee41668abce9d8755c4926
+
+"Motor Helmet" - Tom Verbeeck
+https://sketchfab.com/3d-models/motor-helmet-43e1596b7548478ab4a12ee433cedd5d
+
+"Samurai Helmet" - ARIA
+https://sketchfab.com/3d-models/samurai-helmet-c99e08b2c7c34dbd95b717a9d1ab15fe
+
+"Medieval Horned Helmet" - Zeyad Hamed
+https://sketchfab.com/3d-models/medieval-horned-helmet-4a6470de280744379351fbabf47fa45b
+
+"Wig" - Hype404
+https://sketchfab.com/3d-models/wig-79cae6a6a01143808e94ab33aba03136
+
+"Angel Wings" - Boooooop
+https://sketchfab.com/3d-models/angel-wings-917b4019a1614d179e70cda895fd3f16
+
+"Scuba Goggles And Snorkel" - Turtle_Flipper
+https://sketchfab.com/3d-models/scuba-goggles-and-snorkel-6552ed7809cb4eaca6fd3c987165adbb
+
+"Skateboard" - Ravenetta
+https://sketchfab.com/3d-models/skateboard-2ab1282435fb429ab88b8a88bf9a82f5
+
+"Horn" - hornhamidrezaafshari
+https://sketchfab.com/3d-models/horn-881ab4df081a49b786f3429df10fcbf3
+
+"Katana (Japanese Sword)" - Bermu
+https://sketchfab.com/3d-models/katana-japanese-sword-21110de810f84a4999dc3b3275c3ad41
+
+"Cuban Chain 3D Model" - ℜ𝔢𝔞𝔩 𝔖𝔩𝔦𝔪 𝔖𝔥𝔞𝔡𝔶
+https://sketchfab.com/3d-models/cuban-chain-3d-model-bbea4b3e2f6e4254bf78d3abc79a33da
+
+"Floral Crown Filter Design PNG" - Racinjeff2002
+https://wallpapers.com/png/floral-crown-filter-design-l45arb0xrhk14jg7.html
+
+"Witch Hat Transparent PNGs" - Vecteezy
+https://www.vecteezy.com/free-png/witch-hat-transparent
+
+"Black Bow Tie PNG" - FreePNGimg
+https://freepngimg.com/png/137474-tie-black-bow-png-image-high-quality

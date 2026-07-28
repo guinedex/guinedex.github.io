@@ -1,3 +1,86 @@
+* {
+	--c-common: #33cc33;
+	--c-uncommon: #4c7fff;
+	--c-rare: #b24ce5;
+	--c-ultrarare: #ff3333;
+	--c-legendary: #ffb200;
+	--c-apex: #F25959;
+	--c-g: #F3817D;
+	--c-f: #9A96DD;
+	--c-b: #83D7E6;
+	--c-p: #B6BAC6;
+	--c-c: #90D188;
+	--c-m: #E6D56A;
+}
+
+.border-common {
+	border-color: var(--c-common) !important;
+}
+
+.border-uncommon {
+	border-color: var(--c-uncommon) !important;
+}
+
+.border-rare {
+	border-color: var(--c-rare) !important;
+}
+
+.border-ultrarare {
+	border-color: var(--c-ultrarare) !important;
+}
+
+.border-legendary {
+	border-color: var(--c-legendary) !important;
+}
+
+.text-common {
+	color: var(--c-common) !important;
+}
+
+.text-uncommon {
+	color: var(--c-uncommon) !important;
+}
+
+.text-rare {
+	color: var(--c-rare) !important;
+}
+
+.text-ultrarare {
+	color: var(--c-ultrarare) !important;
+}
+
+.text-legendary {
+	color: var(--c-legendary) !important;
+}
+
+.text-apex {
+	color: var(--c-apex) !important;
+}
+
+.text-g {
+	color: var(--c-g) !important;
+}
+
+.text-f {
+	color: var(--c-f) !important;
+}
+
+.text-b {
+	color: var(--c-b) !important;
+}
+
+.text-p {
+	color: var(--c-p) !important;
+}
+
+.text-c {
+	color: var(--c-c) !important;
+}
+
+.text-m {
+	color: var(--c-m) !important;
+}
+
 html, body {
 	height: 100%;
 }
@@ -13,8 +96,16 @@ html, body {
 	width: 10%;
 }
 
+.width-20 {
+	width: 20%;
+}
+
 .width-25 {
 	width: 25%;
+}
+
+.width-29 {
+	width: 29%;
 }
 
 .half-width {
@@ -25,12 +116,28 @@ html, body {
 	width: 100%;
 }
 
+.translate-left {
+	transform: translateX(-100%);
+}
+
+.translate-up {
+	transform: translateY(-100%);
+}
+
+.translate-upleft {
+	transform: translate(-100%, -100%);
+}
+
 .push-down {
 	transform: translateY(50%);
 }
 
 .allow-tabs {
 	white-space: pre;
+}
+
+.text-decoration-dotted {
+	text-decoration-style: dotted;
 }
 
 .stat-hp {
@@ -55,4 +162,10 @@ html, body {
 	border-color: #FFED5E !important;
 	background-color: #736A22;
 	color: #FFED5E;
+}
+
+.stat-id {
+	border-color: #FF5EDE !important;
+	background-color: #722262;
+	color: #FF5EDE;
 }
