@@ -1,5 +1,5 @@
 //let skins = [];
-let skins = [{"crate_sources": [],"description": "The Default Linguine Cat","image": "res://Subject 4.png","name": "Default Linguine","rarity": "C","abilities": ["[Turn Ability] At the start of the turn, draw 1 supporter.","[Survival Ability] When this Linguine survives an attack, this Linguine's attack is increased by 5."],"apex": false,"attack": 30,"attack_style": "Random Enemy","defense": 20,"element": "Flubgub","health": 150,"id": 4,"level": 1,"speed": 500,"supporter_ability": "[Passive] When drawn, all of your leaders are inflicted with [Lucky].","supporter_ability2": "[Passive] All of your leaders with <Default> or <Linguine> in their name are inflicted with [Lucky]."},{"crate_sources": ["Normal","Daily"],"description": "Linguine Cat Has Groovy Glasses","image": "res://Subject 3.png","nabbed": true,"name": "Linguine With Sunglasses","rarity": "UC","abilities": ["[Combo Draw Ability] Anytime you draw a supporter, if it has <glasses> in their name, this Linguine gains +15 attack.","[Kill Ability] When this Linguine kills an enemy leader, draw 1 supporter and add 5 defense to this Linguine."],"apex": true,"attack": 16,"attack_style": "Fastest Enemy","defense": 8,"element": "Gorblegorble","health": 120,"id": 3,"level": 1,"speed": 300,"supporter_ability": "[Passive] The attack of your Lowest-Attack Leader is increased by 3."}];
+let skins = [];
 let saved = [];
 let searchOptions = {
 	sortBy: "ID",
@@ -371,9 +371,21 @@ function formatAttackTarget(attackTarget) {
 function filterSearchResults() {
 	// Sort
 	let sortKey = searchOptions.sortBy.toLowerCase(); // works without a lookup dict so far
-	let sortedIDs = skins.toSorted((a, b) => {
-		return (a[sortKey] > b[sortKey]) ? 1 : ((a[sortKey] < b[sortKey]) ? -1 : ((a.name < b.name) ? -1 : 1))
-	});
+	// Default sorting algo, replaced for special cases like rarity, which shouldn't be sorted like strings
+	let sortAlgo = (a, b) => {
+		return (a[sortKey] > b[sortKey]) ? 1 : ((a[sortKey] < b[sortKey]) ? -1 : ((a.name < b.name) ? -1 : 1));
+	};
+	// Rarity sorting
+	if (sortKey == "rarity") {
+		console.log("rarity")
+		let rarityKey = {"L": 0, "UR": 1, "R": 2, "UC": 3, "C": 4};
+		sortAlgo = (a, b) => {
+			let aVal = rarityKey[a[sortKey]];
+			let bVal = rarityKey[b[sortKey]];
+			return (aVal > bVal ? 1 : (aVal < bVal ? -1 : (a.name < b.name ? -1 : 1)));
+		};
+	}
+	let sortedIDs = skins.toSorted(sortAlgo);
 	sortedIDs = sortedIDs.map((skin) => skin.id);
 	// universal reverse
 	if (searchOptions.sortByReverse)
