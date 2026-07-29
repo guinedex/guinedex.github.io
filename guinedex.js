@@ -64,7 +64,7 @@ function getRarity(skin_id) {
 // common base for cards that bring up the skin preview
 function buildBaseCard(skin_id, cardtype) {
 	return $(`
-	<button id="${cardtype}-${skin_id}" type="button" class="btn btn-outline-primary width-29 m-1 p-1">
+	<button id="${cardtype}-${skin_id}" type="button" class="btn border-${getRarity(skin_id)} width-29 m-2p p-5p">
 		<img src="${getImagePath(skin_id)}" class="full-width">
 	</button>
 	`);
@@ -153,23 +153,23 @@ function buildSkinPreview(skin_id) {
 		<div class="my-2 py-2 bg-dark rounded">
 			<p class="text-center my-0 text-light">${skin.description}</p>
 		</div>
-		<div class="d-inline-block width-10 p-1 border rounded stat-hp">
+		<div class="d-inline-block width-10 min-width-50 p-1 border rounded stat-hp">
 			<p class="fs-6 text-center my-0">HP</p>
 			<p class="text-light text-center my-0">${skin.health}</p>
 		</div>
-		<div class="d-inline-block width-10 p-1 border rounded stat-atk">
+		<div class="d-inline-block width-10 min-width-50 p-1 border rounded stat-atk">
 			<p class="fs-6 text-center my-0">ATK</p>
 			<p class="text-light text-center my-0">${skin.attack}</p>
 		</div>
-		<div class="d-inline-block width-10 p-1 border rounded stat-def">
+		<div class="d-inline-block width-10 min-width-50 p-1 border rounded stat-def">
 			<p class="fs-6 text-center my-0">DEF</p>
 			<p class="text-light text-center my-0">${skin.defense}</p>
 		</div>
-		<div class="d-inline-block width-10 p-1 border rounded stat-spd">
+		<div class="d-inline-block width-10 min-width-50 p-1 border rounded stat-spd">
 			<p class="fs-6 text-center my-0">SPD</p>
 			<p class="text-light text-center my-0">${skin.speed}</p>
 		</div>
-		<div class="d-inline-block width-10 p-1 border rounded stat-id">
+		<div class="d-inline-block width-10 min-width-50 p-1 border rounded stat-id">
 			<p class="fs-6 text-center my-0">ID</p>
 			<p class="text-light text-center my-0">${skin.id}</p>
 		</div>

@@ -108,6 +108,18 @@ html, body {
 	width: 29%;
 }
 
+.min-width-50 {
+	min-width: 50px;
+}
+
+.m-2p {
+	margin: 2% !important;
+}
+
+.p-5p {
+	padding: 5% !important;
+}
+
 .half-width {
 	width: 50%;
 }
@@ -126,6 +138,18 @@ html, body {
 
 .translate-upleft {
 	transform: translate(-100%, -100%);
+}
+
+.floating-text {
+	text-shadow: 1px 1px 2px #212529;
+}
+
+.behind {
+	z-index: 0;
+}
+
+.ahead {
+	z-index: 1;
 }
 
 .push-down {

@@ -14,15 +14,21 @@
 </head>
 <body class="bg-dark">
 	<div class="container full-height">
-		<div class="row full-height">
+		<div class="row full-height ahead position-relative">
 			<div class="col-3 py-3 max-full-height">
 				<div class="card full-height">
 					<div class="card-header">
-						<h3 class="d-inline-block">Skins</h3>
-						<button id="options-btn" type="button" class="btn btn-primary half-width float-end">
-							<span>Options</span>
-							<span id="options-btn-arrow" class="float-end">[>]</span>
-						</button>
+						<div class="row">
+							<div class="col-lg-4">
+								<h3 class="d-inline-block">Skins</h3>
+							</div>
+							<div class="col-12 col-lg-8">
+								<button id="options-btn" type="button" class="btn btn-primary float-end">
+									<span>Options</span>
+									<span id="options-btn-arrow" class="float-end">&nbsp;[>]</span>
+								</button>
+							</div>
+						</div>
 					</div>
 					<div class="card-body overflow-auto">
 						<div id="skin-list" class="d-flex flex-wrap">
@@ -86,34 +92,34 @@
 
 						<br>
 						<p class="card-subtitle mb-0"><b>From crates</b></p>
-						<div>
-							<label class="px-1 py-1" for="search_crate_normal">
+						<div class="row px-2">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_normal">
 								<input type="checkbox" id="search_crate_normal">
 								Normal
 							</label>
-							<label class="px-1 py-1" for="search_crate_daily">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_daily">
 								<input type="checkbox" id="search_crate_daily">
 								Daily
 							</label>
-							<label class="px-1 py-1" for="search_crate_gold">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_gold">
 								<input type="checkbox" id="search_crate_gold">
 								Gold
 							</label>
 						</div>
-						<div>
-							<label class="px-1 py-1" for="search_crate_spring">
+						<div class="row px-2">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_spring">
 								<input type="checkbox" id="search_crate_spring">
 								Spring
 							</label>
-							<label class="px-1 py-1" for="search_crate_summer">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_summer">
 								<input type="checkbox" id="search_crate_summer">
 								Summer
 							</label>
-							<label class="px-1 py-1" for="search_crate_fall">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_fall">
 								<input type="checkbox" id="search_crate_fall">
 								Fall
 							</label>
-							<label class="px-1 py-1" for="search_crate_winter">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_winter">
 								<input type="checkbox" id="search_crate_winter">
 								Winter
 							</label>
@@ -121,24 +127,25 @@
 
 						<br>
 						<p class="card-subtitle mb-0"><b>Rarity</b></p>
-						<div>
-							<label class="px-1 py-1" for="search_rarity_c">
+						<div class="row px-2">
+							<label class="col-12 col-md-auto col-xl-auto px-1 py-1" for="search_rarity_c">
 								<input type="checkbox" id="search_rarity_c">
 								Common
 							</label>
-							<label class="px-1 py-1" for="search_rarity_uc">
+							<label class="col-12 col-md-auto col-xl-auto px-1 py-1" for="search_rarity_uc">
 								<input type="checkbox" id="search_rarity_uc">
 								Uncommon
 							</label>
-							<label class="px-1 py-1" for="search_rarity_r">
+							<label class="col-12 col-md-auto col-xl-auto px-1 py-1" for="search_rarity_r">
 								<input type="checkbox" id="search_rarity_r">
 								Rare
 							</label>
-							<label class="px-1 py-1" for="search_rarity_ur">
+							<div class="col-lg-12 d-xl-none"></div>
+							<label class="col-12 col-md-auto col-xl-auto px-1 py-1" for="search_rarity_ur">
 								<input type="checkbox" id="search_rarity_ur">
 								Ultra-Rare
 							</label>
-							<label class="px-1 py-1" for="search_rarity_l">
+							<label class="col-12 col-md-auto col-xl-auto px-1 py-1" for="search_rarity_l">
 								<input type="checkbox" id="search_rarity_l">
 								Legendary
 							</label>
@@ -152,28 +159,28 @@
 								Apex only
 							</label>
 						</div>
-						<div>
-							<label class="px-1 py-1" for="search_element_g">
+						<div class="row px-2">
+							<label class="col-6 col-md-4 col-lg-2 px-1 py-1" for="search_element_g">
 								<input type="checkbox" id="search_element_g">
 								<img src="element_g.png">
 							</label>
-							<label class="px-1 py-1" for="search_element_f">
+							<label class="col-6 col-md-4 col-lg-2 px-1 py-1" for="search_element_f">
 								<input type="checkbox" id="search_element_f">
 								<img src="element_f.png">
 							</label>
-							<label class="px-1 py-1" for="search_element_b">
+							<label class="col-6 col-md-4 col-lg-2 px-1 py-1" for="search_element_b">
 								<input type="checkbox" id="search_element_b">
 								<img src="element_b.png">
 							</label>
-							<label class="px-1 py-1" for="search_element_p">
+							<label class="col-6 col-md-4 col-lg-2 px-1 py-1" for="search_element_p">
 								<input type="checkbox" id="search_element_p">
 								<img src="element_p.png">
 							</label>
-							<label class="px-1 py-1" for="search_element_c">
+							<label class="col-6 col-md-4 col-lg-2 px-1 py-1" for="search_element_c">
 								<input type="checkbox" id="search_element_c">
 								<img src="element_c.png">
 							</label>
-							<label class="px-1 py-1" for="search_element_m">
+							<label class="col-6 col-md-4 col-lg-2 px-1 py-1" for="search_element_m">
 								<input type="checkbox" id="search_element_m">
 								<img src="element_m.png">
 							</label>
@@ -225,31 +232,42 @@
 						<br>
 						<p class="card-subtitle mb-0"><b>Stats</b></p>
 						<div>
-							<span class="allow-tabs">Health&#9;</span>
-							<input class="my-1" type="number" id="search_hp_low" placeholder="0" min="0" max="999">
-							<span>to</span>
-							<input class="my-1" type="number" id="search_hp_high" placeholder="999" min="0" max="999">
+							<div class="row">
+								<span class="col-md-4 col-lg-3">Health</span>
+								<div class="col-12 col-md-auto">
+									<input class="my-1" type="number" id="search_hp_low" placeholder="0" min="0" max="999">
+									<span>to</span>
+									<input class="my-1" type="number" id="search_hp_high" placeholder="999" min="0" max="999">
+								</div>
+							</div>
 
-							<br>
-							<span class="allow-tabs">Attack&#9;</span>
-							<input class="my-1" type="number" id="search_atk_low" placeholder="0" min="0" max="999">
-							<span>to</span>
-							<input class="my-1" type="number" id="search_atk_high" placeholder="999" min="0" max="999">
+							<div class="row">
+								<span class="col-md-4 col-lg-3">Attack</span>
+								<div class="col-12 col-md-auto">
+									<input class="my-1" type="number" id="search_atk_low" placeholder="0" min="0" max="999">
+									<span>to</span>
+									<input class="my-1" type="number" id="search_atk_high" placeholder="999" min="0" max="999">
+								</div>
+							</div>
 
-							<br>
-							<span class="allow-tabs">Defense&#9;</span>
-							<input class="my-1" type="number" id="search_def_low" placeholder="0" min="0" max="999">
-							<span>to</span>
-							<input class="my-1" type="number" id="search_def_high" placeholder="999" min="0" max="999">
+							<div class="row">
+								<span class="col-md-4 col-lg-3">Defense</span>
+								<div class="col-12 col-md-auto">
+									<input class="my-1" type="number" id="search_def_low" placeholder="0" min="0" max="999">
+									<span>to</span>
+									<input class="my-1" type="number" id="search_def_high" placeholder="999" min="0" max="999">
+								</div>
+							</div>
 
-							<br>
-							<span class="allow-tabs">Speed&#9;</span>
-							<input class="my-1" type="number" id="search_spd_low" placeholder="0" min="0" max="999">
-							<span>to</span>
-							<input class="my-1" type="number" id="search_spd_high" placeholder="999" min="0" max="999">
+							<div class="row">
+								<span class="col-md-4 col-lg-3">Speed</span>
+								<div class="col-12 col-md-auto">
+									<input class="my-1" type="number" id="search_spd_low" placeholder="0" min="0" max="999">
+									<span>to</span>
+									<input class="my-1" type="number" id="search_spd_high" placeholder="999" min="0" max="999">
+								</div>
+							</div>
 						</div>
-
-						<h3 class="card-title d-none">Card info</h3>
 					</div>
 				</div>
 			</div>
@@ -266,11 +284,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="position-absolute start-0 top-0 ms-1">
-		<p class="text-light">Beta v152 TestB</p>
+	<div class="position-absolute start-0 top-0 ms-1 behind">
+		<p class="text-light floating-text">Beta v152 TestB</p>
 	</div>
-	<div class="position-absolute start-0 top-100 ms-1 translate-up">
-		<div class="text-white-50">
+	<div class="position-absolute start-0 top-100 ms-1 translate-up behind">
+		<div class="text-white-50 floating-text">
 			<span>Not</span>
 			<ul class="mb-1">
 				<li>official</li>
@@ -281,7 +299,7 @@
 			<span>with <u class="text-decoration-dotted" title="Super Linguine Cat Simulator Deluxe Online">SLCSDO</u></span>
 		</div>
 	</div>
-	<div class="position-absolute start-100 top-100 me-1 translate-upleft">
+	<div class="position-absolute start-100 top-100 me-1 translate-upleft floating-text">
 		<a href="credits.txt" class="text-white-50">Credits</a>
 	</div>
 </body>
