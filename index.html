@@ -68,6 +68,7 @@
 							<option value="Defense">Defense</option>
 							<option value="Speed">Speed</option>
 							<option value="Rarity">Rarity</option>
+							<option value="Supporter stat">Supporter stat</option>
 						</select>
 						<label class="px-1 py-1" for="search_sort_reverse">
 							<input type="checkbox" id="search_sort_reverse">
@@ -84,14 +85,120 @@
 
 						<input class="my-1" type="text" id="search_description" placeholder="Skin description"><br>
 
-						<input class="my-1" type="text" id="search_abilities" placeholder="Abilities">
+						<input class="my-1" type="text" id="search_abilities" placeholder="Any abilities">
 						<label class="px-1 py-1" for="search_abilities_fuzzy">
 							<input type="checkbox" id="search_abilities_fuzzy">
 							Fuzzy search
 						</label><br>
 
+						<details>
+							<summary>More ability fields</summary>
+
+							<input class="my-1" type="text" id="search_abilities_categories" placeholder="Ability categories"><br>
+
+							<input class="my-1" type="text" id="search_abilities_leader" placeholder="Leader abilities">
+							<label class="px-1 py-1" for="search_abilities_leader_fuzzy">
+								<input type="checkbox" id="search_abilities_leader_fuzzy">
+								Fuzzy search
+							</label><br>
+
+							<input class="my-1" type="text" id="search_abilities_supporter" placeholder="Supporter abilities">
+							<label class="px-1 py-1" for="search_abilities_supporter_fuzzy">
+								<input type="checkbox" id="search_abilities_supporter_fuzzy">
+								Fuzzy search
+							</label><br>
+
+							<p class="card-subtitle mb-0"><b>Supporter stat affected</b></p>
+							<!--
+							<div class="row px-2">
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_stat_increase">
+									<input type="checkbox" id="search_abilities_stat_increase">
+									Increase
+								</label>
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_stat_decrease">
+									<input type="checkbox" id="search_abilities_stat_decrease">
+									Decrease
+								</label>
+							</div>
+							-->
+							<div class="row px-2">
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_stat_hp">
+									<input type="checkbox" id="search_abilities_stat_hp">
+									HP
+								</label>
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_stat_atk">
+									<input type="checkbox" id="search_abilities_stat_atk">
+									ATK
+								</label>
+								<div class="col-s-12 d-md-none"></div>
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_stat_def">
+									<input type="checkbox" id="search_abilities_stat_def">
+									DEF
+								</label>
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_stat_spd">
+									<input type="checkbox" id="search_abilities_stat_spd">
+									SPD
+								</label>
+							</div>
+
+							<p class="card-subtitle mb-0"><b>Supporter target</b></p>
+							<div class="row px-2">
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_target_any">
+									<input type="checkbox" id="search_abilities_target_any">
+									Any
+								</label>
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_target_ally">
+									<input type="checkbox" id="search_abilities_target_ally">
+									Ally
+								</label>
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_target_enemy">
+									<input type="checkbox" id="search_abilities_target_enemy">
+									Enemy
+								</label>
+							</div>
+							<div class="row px-2">
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_target_low">
+									<input type="checkbox" id="search_abilities_target_low">
+									Lowest
+								</label>
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_target_high">
+									<input type="checkbox" id="search_abilities_target_high">
+									Highest
+								</label>
+							</div>
+							<div class="row px-2">
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_target_hp">
+									<input type="checkbox" id="search_abilities_target_hp">
+									Health
+								</label>
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_target_atk">
+									<input type="checkbox" id="search_abilities_target_atk">
+									Attack
+								</label>
+								<div class="col-md-12 d-lg-none"></div>
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_target_def">
+									<input type="checkbox" id="search_abilities_target_def">
+									Defense
+								</label>
+								<label class="col-12 col-sm-auto px-1 py-1" for="search_abilities_target_spd">
+									<input type="checkbox" id="search_abilities_target_spd">
+									Speed
+								</label>
+							</div>
+						</details>
+
 						<br>
 						<p class="card-subtitle mb-0"><b>From crates</b></p>
+						<div class="row px-2">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_exclusive">
+								<input type="checkbox" id="search_crate_exclusive">
+								Exclusive
+							</label>
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_hyperexclusive">
+								<input type="checkbox" id="search_crate_hyperexclusive">
+								Hyper-exclusive
+							</label>
+						</div>
 						<div class="row px-2">
 							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_normal">
 								<input type="checkbox" id="search_crate_normal">
@@ -122,6 +229,20 @@
 							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_winter">
 								<input type="checkbox" id="search_crate_winter">
 								Winter
+							</label>
+						</div>
+						<div class="row px-2">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_story">
+								<input type="checkbox" id="search_crate_story">
+								Story reward
+							</label>
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_money">
+								<input type="checkbox" id="search_crate_money">
+								Supporter DLC
+							</label>
+							<label class="col-12 col-md-auto px-1 py-1" for="search_crate_music">
+								<input type="checkbox" id="search_crate_music">
+								Soundtrack DLC
 							</label>
 						</div>
 
@@ -188,44 +309,48 @@
 
 						<br>
 						<p class="card-subtitle mb-0"><b>Attack target</b></p>
-						<div>
-							<label class="px-1 py-1" for="search_target_hp_high">
+						<div class="row px-2">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_target_hp_high">
 								<input type="checkbox" id="search_target_hp_high">
-								High HP
+								Highest HP
 							</label>
-							<label class="px-1 py-1" for="search_target_atk_high">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_target_atk_high">
 								<input type="checkbox" id="search_target_atk_high">
-								High ATK
+								Highest ATK
 							</label>
-							<label class="px-1 py-1" for="search_target_def_high">
+							<div class="col-md-12 d-xl-none"></div>
+							<label class="col-12 col-md-auto px-1 py-1" for="search_target_def_high">
 								<input type="checkbox" id="search_target_def_high">
-								High DEF
+								Highest DEF
 							</label>
-							<label class="px-1 py-1" for="search_target_spd_high">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_target_spd_high">
 								<input type="checkbox" id="search_target_spd_high">
-								High SPD
-							</label>
-							<label class="px-1 py-1" for="search_target_random">
-								<input type="checkbox" id="search_target_random">
-								Random
+								Fastest
 							</label>
 						</div>
-						<div>
-							<label class="px-1 py-1" for="search_target_hp_low">
+						<div class="row px-2">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_target_hp_low">
 								<input type="checkbox" id="search_target_hp_low">
-								Low HP
+								Lowest HP
 							</label>
-							<label class="px-1 py-1" for="search_target_atk_low">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_target_atk_low">
 								<input type="checkbox" id="search_target_atk_low">
-								Low ATK
+								Lowest ATK
 							</label>
-							<label class="px-1 py-1" for="search_target_def_low">
+							<div class="col-md-12 d-xl-none"></div>
+							<label class="col-12 col-md-auto px-1 py-1" for="search_target_def_low">
 								<input type="checkbox" id="search_target_def_low">
-								Low DEF
+								Lowest DEF
 							</label>
-							<label class="px-1 py-1" for="search_target_spd_low">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_target_spd_low">
 								<input type="checkbox" id="search_target_spd_low">
-								Low SPD
+								Slowest
+							</label>
+						</div>
+						<div class="row px-2">
+							<label class="col-12 col-md-auto px-1 py-1" for="search_target_random">
+								<input type="checkbox" id="search_target_random">
+								Random
 							</label>
 						</div>
 
@@ -233,7 +358,7 @@
 						<p class="card-subtitle mb-0"><b>Stats</b></p>
 						<div>
 							<div class="row">
-								<span class="col-md-4 col-lg-3">Health</span>
+								<span class="col-md-3 col-lg-2 my-auto pe-0">Health</span>
 								<div class="col-12 col-md-auto">
 									<input class="my-1" type="number" id="search_hp_low" placeholder="0" min="0" max="999">
 									<span>to</span>
@@ -242,7 +367,7 @@
 							</div>
 
 							<div class="row">
-								<span class="col-md-4 col-lg-3">Attack</span>
+								<span class="col-md-3 col-lg-2 my-auto pe-0">Attack</span>
 								<div class="col-12 col-md-auto">
 									<input class="my-1" type="number" id="search_atk_low" placeholder="0" min="0" max="999">
 									<span>to</span>
@@ -251,7 +376,7 @@
 							</div>
 
 							<div class="row">
-								<span class="col-md-4 col-lg-3">Defense</span>
+								<span class="col-md-3 col-lg-2 my-auto pe-0">Defense</span>
 								<div class="col-12 col-md-auto">
 									<input class="my-1" type="number" id="search_def_low" placeholder="0" min="0" max="999">
 									<span>to</span>
@@ -260,7 +385,7 @@
 							</div>
 
 							<div class="row">
-								<span class="col-md-4 col-lg-3">Speed</span>
+								<span class="col-md-3 col-lg-2 my-auto pe-0">Speed</span>
 								<div class="col-12 col-md-auto">
 									<input class="my-1" type="number" id="search_spd_low" placeholder="0" min="0" max="999">
 									<span>to</span>

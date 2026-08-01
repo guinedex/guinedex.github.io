@@ -13,6 +13,16 @@ let searchOptions = {
 	descriptionFuzzy: false,
 	abilities: "",
 	abilitiesFuzzy: false,
+	abilitiesCategories: "",
+	abilitiesCategoriesFuzzy: false,
+	abilitiesLeader: "",
+	abilitiesLeaderFuzzy: false,
+	abilitiesSupporter: "",
+	abilitiesSupporterFuzzy: false,
+	abilitiesStat: [],
+	abilitiesTarget: [],
+	abilitiesTargetEnd: [],
+	abilitiesTargetStat: [],
 	crates: [],
 	rarities: [],
 	apexOnly: false,
@@ -61,11 +71,106 @@ function getRarity(skin_id) {
 	return rarities[getSkin(skin_id).rarity];
 }
 
+function isExclusive(skin_id) {
+	let skin = getSkin(skin_id);
+	return !skin.crate_sources.map((crate) => crate.toLowerCase()).includes("normal") && skin.crate_sources.length >= 2;
+}
+
+function isHyperExclusive(skin_id) {
+	let skin = getSkin(skin_id);
+	return !skin.crate_sources.map((crate) => crate.toLowerCase()).includes("normal") && skin.crate_sources.length == 1;
+}
+
+function splitAbility(ability) {
+	let reg = /^((?:\[[^\[\]]*\])?)\s*(.*)$/;
+	let matches = reg.exec(ability);
+	return [matches[1], matches[2]];
+}
+
+function getStandardSupporter(skin_id) {
+	let skin = getSkin(skin_id);
+	let supporterAbility = ("supporter_ability" in skin) ? splitAbility(skin.supporter_ability)[1] : "";
+	let reg = /the (health|attack|defense|speed) of (your|the) ((?:highest|lowest)(?:\-|\s+)(?:health|attack|defense|speed)|(?:fastest|slowest))( enemy)? leader is (increased|decreased) by \d+/;
+	return reg.exec(supporterAbility.toLowerCase());
+}
+
+function isStandardSupporter(skin_id) {
+	return Boolean(getStandardSupporter(skin_id));
+}
+
+function getSupporterAdjustment(skin_id) {
+	let skin = getSkin(skin_id);
+	let supporterAbility = ("supporter_ability" in skin) ? splitAbility(skin.supporter_ability)[1] : "";
+	let reg = /(\d+)/;
+	let result = reg.exec(supporterAbility);
+	return result ? parseInt(result[1]) : 0;
+}
+
+function getSupporterStat(skin_id) {
+	let standardSupporterAbility = getStandardSupporter(skin_id);
+	if (standardSupporterAbility)
+		return standardSupporterAbility[1];
+	return "";
+}
+
+function abbrStat(statLong) {
+	let lookup = {"health": "hp", "attack": "atk", "defense": "def", "speed": "spd"};
+	return statLong.toLowerCase() in lookup ? lookup[statLong.toLowerCase()] : "";
+}
+
+function lengthenStat(statShort) {
+	let lookup = {"hp": "health", "atk": "attack", "def": "defense", "spd": "speed"};
+	return statShort.toLowerCase() in lookup ? lookup[statShort.toLowerCase()] : "";
+}
+
+function getSupporterTarget(skin_id) {
+	let standardSupporterAbility = getStandardSupporter(skin_id);
+	if (standardSupporterAbility) {
+		if (standardSupporterAbility[2] == "your")
+			return "ally";
+		else if (standardSupporterAbility[4] == " enemy")
+			return "enemy";
+		else
+			return "any";
+	}
+	return "";
+}
+
+function getSupporterTargetEnd(skin_id) {
+	let standardSupporterAbility = getStandardSupporter(skin_id);
+	if (standardSupporterAbility) {
+		if (standardSupporterAbility[3].includes("highest") || standardSupporterAbility[3].includes("fastest"))
+			return "high";
+		else
+			return "low";
+	}
+	return "";
+}
+
+function getSupporterTargetStat(skin_id) {
+	let standardSupporterAbility = getStandardSupporter(skin_id);
+	if (standardSupporterAbility) {
+		if (standardSupporterAbility[3].includes("health"))
+			return "hp";
+		else if (standardSupporterAbility[3].includes("attack"))
+			return "atk";
+		else if (standardSupporterAbility[3].includes("defense"))
+			return "def";
+		else if (standardSupporterAbility[3].includes("fastest") || standardSupporterAbility[3].includes("slowest"))
+			return "spd";
+	}
+	return "";
+}
+
 // common base for cards that bring up the skin preview
 function buildBaseCard(skin_id, cardtype) {
+	let skin = getSkin(skin_id);
+	let elem = skin.element;
+	let elem_letter = elem.toLowerCase()[0];
 	return $(`
-	<button id="${cardtype}-${skin_id}" type="button" class="btn border-${getRarity(skin_id)} width-29 m-2p p-5p">
+	<button id="${cardtype}-${skin_id}" type="button" class="btn border-${getRarity(skin_id)} width-29 m-2p p-5p position-relative">
 		<img src="${getImagePath(skin_id)}" class="full-width">
+		<img src="element_${elem_letter}.png" class="position-absolute start-0 top-0 width-35 rounded ${skin.apex ? "apex-outline" : ""}">
 	</button>
 	`);
 }
@@ -142,9 +247,9 @@ function buildSkinPreview(skin_id) {
 	let elem_color = skin.apex ? "apex" : elem_letter;
 	return $(`
 		<h5 class="card-title text-center text-${rarity}">${skin.name}</h5>
-		<h5 class="card-subtitle text-center text-${rarity}">${rarity[0].toUpperCase()+rarity.slice(1)}</h5>
+		<h5 class="card-subtitle text-center text-${rarity}">${rarity[0].toUpperCase()+rarity.slice(1)}${isExclusive(skin_id) ? " Exclusive" : (isHyperExclusive(skin_id) ? " Hyper-Exclusive" : "")}</h5>
 		<div class="d-inline-block position-relative start-50 translate-middle-x">
-			<img src="element_${elem_letter}.png"><h5 class="card-subtitle d-inline-block ms-2 text-${elem_color}">${(skin.apex ? "Apex " : "") + elem}</h5>
+			<img src="element_${elem_letter}.png" class="rounded ${skin.apex ? "apex-outline" : ""}"><h5 class="card-subtitle d-inline-block ms-2 text-${elem_color}">${(skin.apex ? "Apex " : "") + elem}</h5>
 		</div>
 		<br>
 		<div class="border border-2 border-${rarity} rounded mt-1 bg-dark">
@@ -179,12 +284,11 @@ function buildSkinPreview(skin_id) {
 		<p class="mb-1 fs-5">ABILITIES</p>
 		${
 			skin.abilities.map((ability) => {
-				let reg = /(\[.+?\]) (.+)/;
-				let matches = reg.exec(ability);
+				let matches = splitAbility(ability);
 				return `
 					<div class="border border-dark rounded mb-1">
+						<p class="mx-1 my-1">${matches[0]}</p>
 						<p class="mx-1 my-1">${matches[1]}</p>
-						<p class="mx-1 my-1">${matches[2]}</p>
 					</div>
 				`;
 			}).join("")
@@ -193,13 +297,12 @@ function buildSkinPreview(skin_id) {
 			(() => {
 				if (!skin.supporter_ability)
 					return "";
-				let reg = /(\[.+?\]) (.+)/;
-				let matches = reg.exec(skin.supporter_ability);
+				let matches = splitAbility(skin.supporter_ability);
 				return `
 					<p class="mb-1 fs-5">SUPPORTER ABILITY</p>
 					<div class="border border-dark rounded mb-1">
+						<p class="mx-1 my-1">${matches[0]}</p>
 						<p class="mx-1 my-1">${matches[1]}</p>
-						<p class="mx-1 my-1">${matches[2]}</p>
 					</div>
 				`;
 			})()
@@ -239,6 +342,26 @@ function registerOptionHandlers() {
 	$("#search_description").on("input", applySearchOptions);
 	$("#search_abilities").on("input", applySearchOptions);
 	$("#search_abilities_fuzzy").on("change", applySearchOptions);
+	$("#search_abilities_categories").on("input", applySearchOptions);
+	$("#search_abilities_leader").on("input", applySearchOptions);
+	$("#search_abilities_leader_fuzzy").on("change", applySearchOptions);
+	$("#search_abilities_supporter").on("input", applySearchOptions);
+	$("#search_abilities_supporter_fuzzy").on("change", applySearchOptions);
+	$("#search_abilities_stat_hp").on("change", applySearchOptions);
+	$("#search_abilities_stat_atk").on("change", applySearchOptions);
+	$("#search_abilities_stat_def").on("change", applySearchOptions);
+	$("#search_abilities_stat_spd").on("change", applySearchOptions);
+	$("#search_abilities_target_any").on("change", applySearchOptions);
+	$("#search_abilities_target_ally").on("change", applySearchOptions);
+	$("#search_abilities_target_enemy").on("change", applySearchOptions);
+	$("#search_abilities_target_low").on("change", applySearchOptions);
+	$("#search_abilities_target_high").on("change", applySearchOptions);
+	$("#search_abilities_target_hp").on("change", applySearchOptions);
+	$("#search_abilities_target_atk").on("change", applySearchOptions);
+	$("#search_abilities_target_def").on("change", applySearchOptions);
+	$("#search_abilities_target_spd").on("change", applySearchOptions);
+	$("#search_crate_exclusive").on("change", applySearchOptions);
+	$("#search_crate_hyperexclusive").on("change", applySearchOptions);
 	$("#search_crate_normal").on("change", applySearchOptions);
 	$("#search_crate_daily").on("change", applySearchOptions);
 	$("#search_crate_gold").on("change", applySearchOptions);
@@ -246,6 +369,9 @@ function registerOptionHandlers() {
 	$("#search_crate_summer").on("change", applySearchOptions);
 	$("#search_crate_fall").on("change", applySearchOptions);
 	$("#search_crate_winter").on("change", applySearchOptions);
+	$("#search_crate_story").on("change", applySearchOptions);
+	$("#search_crate_money").on("change", applySearchOptions);
+	$("#search_crate_music").on("change", applySearchOptions);
 	$("#search_rarity_c").on("change", applySearchOptions);
 	$("#search_rarity_uc").on("change", applySearchOptions);
 	$("#search_rarity_r").on("change", applySearchOptions);
@@ -289,7 +415,32 @@ function fetchSearchOptions() {
 	//searchOptions.descriptionFuzzy = false
 	searchOptions.abilities = $("#search_abilities").val();
 	searchOptions.abilitiesFuzzy = $("#search_abilities_fuzzy").prop("checked");
+	searchOptions.abilitiesCategories = $("#search_abilities_categories").val();
+	//searchOptions.abilitiesCategoriesFuzzy = false;
+	searchOptions.abilitiesLeader = $("#search_abilities_leader").val();
+	searchOptions.abilitiesLeaderFuzzy = $("#search_abilities_leader_fuzzy").prop("checked");
+	searchOptions.abilitiesSupporter = $("#search_abilities_supporter").val();
+	searchOptions.abilitiesSupporterFuzzy = $("#search_abilities_supporter_fuzzy").prop("checked");
+	searchOptions.abilitiesStat = [];
+	if ($("#search_abilities_stat_hp").prop("checked")) searchOptions.abilitiesStat.push("hp");
+	if ($("#search_abilities_stat_atk").prop("checked")) searchOptions.abilitiesStat.push("atk");
+	if ($("#search_abilities_stat_def").prop("checked")) searchOptions.abilitiesStat.push("def");
+	if ($("#search_abilities_stat_spd").prop("checked")) searchOptions.abilitiesStat.push("spd");
+	searchOptions.abilitiesTarget = [];
+	if ($("#search_abilities_target_any").prop("checked")) searchOptions.abilitiesTarget.push("any");
+	if ($("#search_abilities_target_ally").prop("checked")) searchOptions.abilitiesTarget.push("ally");
+	if ($("#search_abilities_target_enemy").prop("checked")) searchOptions.abilitiesTarget.push("enemy");
+	searchOptions.abilitiesTargetEnd = [];
+	if ($("#search_abilities_target_low").prop("checked")) searchOptions.abilitiesTargetEnd.push("low");
+	if ($("#search_abilities_target_high").prop("checked")) searchOptions.abilitiesTargetEnd.push("high");
+	searchOptions.abilitiesTargetStat = [];
+	if ($("#search_abilities_target_hp").prop("checked")) searchOptions.abilitiesTargetStat.push("hp");
+	if ($("#search_abilities_target_atk").prop("checked")) searchOptions.abilitiesTargetStat.push("atk");
+	if ($("#search_abilities_target_def").prop("checked")) searchOptions.abilitiesTargetStat.push("def");
+	if ($("#search_abilities_target_spd").prop("checked")) searchOptions.abilitiesTargetStat.push("spd");
 	searchOptions.crates = [];
+	if ($("#search_crate_exclusive").prop("checked")) searchOptions.crates.push("exclusive");
+	if ($("#search_crate_hyperexclusive").prop("checked")) searchOptions.crates.push("hyperexclusive");
 	if ($("#search_crate_normal").prop("checked")) searchOptions.crates.push("normal");
 	if ($("#search_crate_daily").prop("checked")) searchOptions.crates.push("daily");
 	if ($("#search_crate_gold").prop("checked")) searchOptions.crates.push("gold");
@@ -297,6 +448,9 @@ function fetchSearchOptions() {
 	if ($("#search_crate_summer").prop("checked")) searchOptions.crates.push("summer");
 	if ($("#search_crate_fall").prop("checked")) searchOptions.crates.push("fall");
 	if ($("#search_crate_winter").prop("checked")) searchOptions.crates.push("winter");
+	if ($("#search_crate_story").prop("checked")) searchOptions.crates.push("story");
+	if ($("#search_crate_money").prop("checked")) searchOptions.crates.push("money");
+	if ($("#search_crate_music").prop("checked")) searchOptions.crates.push("music");
 	searchOptions.rarities = [];
 	if ($("#search_rarity_c").prop("checked")) searchOptions.rarities.push("c");
 	if ($("#search_rarity_uc").prop("checked")) searchOptions.rarities.push("uc");
@@ -397,6 +551,18 @@ function filterSearchResults() {
 				let bVal = rarityMap[b[sortKey]];
 				return (aVal > bVal ? greaterOrder : (aVal < bVal ? lesserOrder : (a.name < b.name ? fallbackLesserOrder : fallbackGreaterOrder)));
 			};
+		} else if (sortKey == "supporter stat") {
+			// Supporter stat adjustment sorting
+			let greaterOrder = doReverseMain ? -1 : 1;
+			let lesserOrder = 0 - greaterOrder;
+			let fallbackLesserOrder = doReverseFallback ? 1 : -1;
+			let fallbackGreaterOrder = 0 - fallbackLesserOrder;
+			let rarityMap = {"C": 0, "UC": 1, "R": 2, "UR": 3, "L": 4};
+			sortAlgo = (a, b) => {
+				let aVal = isStandardSupporter(a.id) ? getSupporterAdjustment(a.id) : 0;
+				let bVal = isStandardSupporter(b.id) ? getSupporterAdjustment(b.id) : 0;
+				return (aVal > bVal ? greaterOrder : (aVal < bVal ? lesserOrder : (a.name < b.name ? fallbackLesserOrder : fallbackGreaterOrder)));
+			};
 		} else {
 			// Default sort case
 
@@ -483,14 +649,88 @@ function filterSearchResults() {
 				break;
 			}
 		}
+		// abilities categories search
+		let abilitiesCategoriesTerms = [];
+		if (!searchOptions.abilitiesCategoriesFuzzy)
+			abilitiesCategoriesTerms.push(searchOptions.abilitiesCategories.toLowerCase());
+		else
+			abilitiesCategoriesTerms = (searchOptions.abilitiesCategories.toLowerCase().split(" "));
+		for (let abilitiesCategoriesTerm of abilitiesCategoriesTerms) {
+			if (!arrayElementsInclude(skin.abilities.map(
+						(s) => splitAbility(s.toLowerCase())[0]
+					), abilitiesCategoriesTerm, true)) {
+				matchesFilter = false;
+				break;
+			}
+		}
+		// leader abilities search
+		let abilitiesLeaderTerms = [];
+		if (!searchOptions.abilitiesLeaderFuzzy)
+			abilitiesLeaderTerms.push(searchOptions.abilitiesLeader.toLowerCase());
+		else
+			abilitiesLeaderTerms = (searchOptions.abilitiesLeader.toLowerCase().split(" "));
+		for (let abilitiesLeaderTerm of abilitiesLeaderTerms) {
+			if (!arrayElementsInclude(skin.abilities.map(
+						(s) => splitAbility(s.toLowerCase())[1]
+					), abilitiesLeaderTerm, true)) {
+				matchesFilter = false;
+				break;
+			}
+		}
+		// supporter abilities search
+		let abilitiesSupporterTerms = [];
+		if (!searchOptions.abilitiesSupporterFuzzy)
+			abilitiesSupporterTerms.push(searchOptions.abilitiesSupporter.toLowerCase());
+		else
+			abilitiesSupporterTerms = (searchOptions.abilitiesSupporter.toLowerCase().split(" "));
+		for (let abilitiesSupporterTerm of abilitiesSupporterTerms) {
+			if (!skin.supporter_ability.toLowerCase().includes(abilitiesSupporterTerm)) {
+				matchesFilter = false;
+				break;
+			}
+		}
+		// supporter ability stat
+		if (searchOptions.abilitiesStat.length) {
+			if (!searchOptions.abilitiesStat.includes(abbrStat(getSupporterStat(skin.id))))
+				matchesFilter = false;
+		}
+		// supporter target
+		if (searchOptions.abilitiesTarget.length) {
+			if (!searchOptions.abilitiesTarget.includes(getSupporterTarget(skin.id)))
+				matchesFilter = false;
+		}
+		// supporter target details--low/high end stats
+		if (searchOptions.abilitiesTargetEnd.length) {
+			if (!searchOptions.abilitiesTargetEnd.includes(getSupporterTargetEnd(skin.id)))
+				matchesFilter = false;
+		}
+		// supporter target details--targeted stat
+		if (searchOptions.abilitiesTargetStat.length) {
+			if (!searchOptions.abilitiesTargetStat.includes(getSupporterTargetStat(skin.id)))
+				matchesFilter = false;
+		}
 		// crates
 		if (searchOptions.crates.length) {
-			let inCrate = false;
-			for (let crate of skin.crate_sources) {
-				if (searchOptions.crates.includes(crate.toLowerCase()))
-					inCrate = true;
+			let nonCrateNames = ["exclusive", "hyperexclusive"];
+			let sourceCrates = searchOptions.crates.filter((crate) => !nonCrateNames.includes(crate)).map((crate) => crate.toLowerCase());
+			let skinSourceCrates = skin.crate_sources.map((crate) => crate.toLowerCase()).filter((crate) => !nonCrateNames.includes(crate));
+			let inCrate = true;
+			if (sourceCrates.length) {
+				inCrate = false;
+				for (let crate of skin.crate_sources) {
+					if (sourceCrates.includes(crate.toLowerCase()))
+						inCrate = true;
+				}
 			}
-			if (!inCrate)
+			let inExclusivity = true;
+			if (searchOptions.crates.includes("exclusive") || searchOptions.crates.includes("hyperexclusive")) {
+				inExclusivity = false;
+				if (searchOptions.crates.includes("exclusive") && !skinSourceCrates.includes("normal") && skinSourceCrates.length >= 2)
+					inExclusivity = true;
+				if (searchOptions.crates.includes("hyperexclusive") && !skinSourceCrates.includes("normal") && skinSourceCrates.length == 1)
+					inExclusivity = true;
+			}
+			if (!inCrate || !inExclusivity)
 				matchesFilter = false;
 		}
 		// rarities

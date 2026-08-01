@@ -108,6 +108,10 @@ html, body {
 	width: 29%;
 }
 
+.width-35 {
+	width: 35%;
+}
+
 .min-width-50 {
 	min-width: 50px;
 }
@@ -192,4 +196,11 @@ html, body {
 	border-color: #FF5EDE !important;
 	background-color: #722262;
 	color: #FF5EDE;
+}
+
+.apex-outline {
+	filter: drop-shadow(-1px -1px 1px var(--c-apex))
+		drop-shadow(1px -1px 1px var(--c-apex))
+		drop-shadow(1px 1px 1px var(--c-apex))
+		drop-shadow(-1px 1px 1px var(--c-apex));
 }
